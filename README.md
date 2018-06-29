@@ -18,7 +18,7 @@ Infrastructure as Code
 
 ##### example
 
-``` ruby
+``` hcl
 provider "aws" {
     region     = "us-west-2"   # currentry, us-east-1 or us-west-2
     access_key = "YOUR_ACCESS_KEY"
