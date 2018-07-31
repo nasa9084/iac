@@ -1,0 +1,5 @@
+---
+- hosts: kube_node
+  become: yes
+  roles:
+    - kube_node

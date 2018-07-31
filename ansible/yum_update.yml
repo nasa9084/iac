@@ -1,0 +1,5 @@
+---
+- hosts: yum_update
+  become: yes
+  roles:
+    - yum_update

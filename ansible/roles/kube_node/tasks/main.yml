@@ -1,0 +1,39 @@
+---
+- name: remove swapfile from /etc/fstab
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+
+- name: disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+- name: install Docker CE 17.03
+  script: files/17.03.sh
+
+- name: start docker
+  systemd:
+    name: docker.service
+    enabled: yes
+    state: started
+
+- name: stats firewalld.service
+  systemd:
+    name: firewalld.service
+  register: firewalld_service
+
+- name: stop firewalld
+  systemd:
+    name: firewalld
+    enabled: no
+    state: stopped
+  when: firewalld_service.status.LoadState == "loaded"
+
+- name: enable ip forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes

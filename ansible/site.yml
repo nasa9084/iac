@@ -1,0 +1,3 @@
+---
+- import_playbook: yum_update.yml
+- import_playbook: kube_node.yml
